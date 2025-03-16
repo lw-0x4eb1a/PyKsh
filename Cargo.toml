@@ -1,0 +1,13 @@
+[package]
+name = "pyksh"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "pyksh"
+crate-type = ["cdylib"]
+
+[dependencies]
+glsl = "7.0.0"
+pyo3 = "0.24.0"

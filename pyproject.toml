@@ -1,0 +1,36 @@
+[project]
+name = "pyksh"
+version = "0.0.3"
+authors = [
+  { name="LaoWang", email="wzh2021@pku.edu.cn" },
+]
+description = "Don't Starve / Don't Stave Together shader file parser & compiler in python."
+
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+dependencies = [
+    "pcpp == 1.30",
+]
+# dynamic = ["version"]
+
+[project.scripts]
+pyksh = "pyksh.cli:cli"
+
+[project.urls]
+Homepage = "https://github.com/TODO/sampleproject"
+Issues = "https://github.com/TODO/sampleproject/issues"
+
+[build-system]
+requires = ["maturin>=1.8,<2.0"]
+build-backend = "maturin"
+
+[tool.maturin]
+features = ["pyo3/extension-module"]
+python-source = "python"

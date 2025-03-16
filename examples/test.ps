@@ -1,0 +1,14 @@
+uniform sampler2D SAMPLER[1];
+
+varying vec3 PS_TEXCOORD_LIFE;
+varying vec4 PS_COLOUR;
+
+void main()
+{
+	vec4 colour = texture2D( SAMPLER[0], PS_TEXCOORD_LIFE.xy );
+	
+	float a = (colour.g - PS_TEXCOORD_LIFE.z) * 10000.0;
+	a = clamp( a, 0.0, 1.0 );
+	
+	gl_FragColor = vec4( PS_COLOUR.rgb, PS_COLOUR.a * a );
+}
