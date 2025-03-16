@@ -79,6 +79,11 @@ class Shader:
 		dump_u32 = lambda v: f.write(struct.pack("<I", v))
 		dump_bytes = lambda b: f.write(struct.pack(f"<I{len(b)}s", len(b), b))
 		dump_string = lambda s: dump_bytes(s.encode("utf-8"))
+		def dump_string_0(s):
+			b = s.encode("utf-8")
+			if not b.endswith(b"\x00"):
+				b += b"\x00"
+			dump_bytes(b)
 
 		dump_string(self.shader_name)
 		dump_u32(len(self.uniform_list))
@@ -86,9 +91,9 @@ class Shader:
 			f.write(dumps_varliable(var))
 
 		dump_string(self.vs_name)
-		dump_string(self.vs_content)
+		dump_string_0(self.vs_content)
 		dump_string(self.ps_name)
-		dump_string(self.ps_content)
+		dump_string_0(self.ps_content)
 
 		dump_u32(len(self.vs_uniform_index_list))
 		for i in self.vs_uniform_index_list:
