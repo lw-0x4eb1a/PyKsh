@@ -3,8 +3,7 @@ This example demonstrates how to parse a *.ksh file using this package.
 '''
 
 from pyksh import Shader
-# s = Shader.load(open("shaders/anim.ksh", "rb"))
-s = Shader.from_file("shaders/anim.ksh")
+s = Shader.from_file("anim.ksh")
 print(f"shader_name: {s.shader_name}")
 print()
 print(f"{s.vs_name}\n{s.vs_content}")
