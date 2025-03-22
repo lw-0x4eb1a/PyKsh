@@ -5,13 +5,34 @@ from .shader import Shader
 def cli():
 	parser = argparse.ArgumentParser(prog = "pyksh", description="pyksh - ksh compiler in Python")
 	parser.add_argument("file1", type=str, help="input file 1")
-	parser.add_argument("file2", type=str, help="input file 2", nargs="?")
+	parser.add_argument("file2", type=str, help="input file 2", default=None, nargs="?")
 	parser.add_argument("-o", "--output", type=str, help="output file", required=False)
+	parser.add_argument("-d", "--decompile", action="store_true", help="decompile ksh to vs and ps")
 
 	args = parser.parse_args()
 	file1 = args.file1
 	file2 = args.file2
 	output = args.output
+	decompile = args.decompile
+
+	if decompile:
+		if not os.path.exists(file1):
+			print(f"File not exists: {file1}")
+			return 1
+		fullpath = os.path.abspath(file1)
+		dirname = os.path.dirname(fullpath)
+		shader = Shader.from_file(file1)
+		vs = os.path.join(dirname, shader.vs_name)
+		ps = os.path.join(dirname, shader.ps_name)
+		with open(vs, "w") as f:
+			f.write(shader.vs_content)
+			print("write: ", vs)
+		with open(ps, "w") as f:
+			f.write(shader.ps_content)
+			print("write: ", ps)
+	
+		return 0
+		
 
 	for path in [file1, file2]:
 		if not os.path.exists(path):
@@ -32,19 +53,6 @@ def cli():
 		ps = file2
 	else:
 		print(f"Invalid file extension: {file2}")
-
-	if file1.endswith(".ksh") and file2 is None:
-		fullpath = os.path.abspath(file1)
-		dirname = os.path.dirname(fullpath)
-		shader = Shader.from_file(file1)
-		vs = os.path.join(dirname, shader.vs_name)
-		ps = os.path.join(dirname, shader.ps_name)
-		with open(vs, "w") as f:
-			f.write(shader.vs_content)
-		with open(ps, "w") as f:
-			f.write(shader.ps_content)
-
-		return 0
 
 	if vs is None:
 		print("Vertex shader(.vs) not found")

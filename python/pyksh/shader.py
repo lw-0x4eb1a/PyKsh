@@ -54,9 +54,9 @@ class Shader:
 			uniform_list.append(var)
 
 		vs_name = read_string()
-		vs_content = read_string()
+		vs_content = read_string().rstrip("\x00")
 		ps_name = read_string()
-		ps_content = read_string()
+		ps_content = read_string().rstrip("\x00")
 
 		num_vs_uniforms = read_u32()
 		vs_uniform_index_list = [read_u32() for _ in range(num_vs_uniforms)]
