@@ -1,6 +1,6 @@
 [project]
 name = "pyksh"
-version = "0.0.4"
+version = "0.0.5"
 authors = [
   { name="LaoWang", email="wzh2021@pku.edu.cn" },
 ]
